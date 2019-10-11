@@ -6,7 +6,77 @@
         xmlns:local="clr-namespace:ChooseColor"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+    
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="5"/>
+                <RowDefinition/>
+                <RowDefinition Height="5"/>
+                <RowDefinition/>
+                <RowDefinition Height="5"/>
+                <RowDefinition/>
+                <RowDefinition Height="5"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <!-- Alpha. -->
+            <CheckBox x:Name="alphaCheckBox" Grid.Column="0" Grid.Row="0" IsChecked="True" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Text="Alpha:"/>
+            <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" Text="{Binding Path=ColorAlphaComponent}"/>
+
+            <Slider Grid.Column="3" Grid.Row="0" IsEnabled="{Binding ElementName=alphaCheckBox, Path=IsChecked}" Maximum="255" Minimum="0" Value="{Binding Path=ColorAlphaComponent}"/>
+            <!-- Red. -->
+            <CheckBox x:Name="redCheckBox" Grid.Column="0" Grid.Row="2" IsChecked="True" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Text="Red:"/>
+            <TextBlock Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" Text="{Binding Path=ColorRedComponent}"/>
+            <Slider Grid.Column="3" Grid.Row="2" IsEnabled="{Binding ElementName=redCheckBox, Path=IsChecked}" Maximum="255" Minimum="0" Value="{Binding Path=ColorRedComponent}"/>
+            <!-- Green. -->
+            <CheckBox x:Name="greenCheckBox" Grid.Column="0" Grid.Row="4" IsChecked="True" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right" Text="Green:"/>
+            <TextBlock Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" Text="{Binding Path=ColorGreenComponent}"/>
+            <Slider Grid.Column="3" Grid.Row="4" IsEnabled="{Binding ElementName=greenCheckBox, Path=IsChecked}" Maximum="255" Minimum="0" Value="{Binding Path=ColorGreenComponent}"/>
+            <!-- Blue. -->
+            <CheckBox x:Name="blueCheckBox" Grid.Column="0" Grid.Row="6" IsChecked="True" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Grid.Row="6" HorizontalAlignment="Right" Text="Blue:"/>
+            <TextBlock Grid.Column="2" Grid.Row="6" HorizontalAlignment="Center" Text="{Binding Path=ColorBlueComponent}"/>
+            <Slider Grid.Column="3" Grid.Row="6" IsEnabled="{Binding ElementName=blueCheckBox, Path=IsChecked}" Maximum="255" Minimum="0" Value="{Binding Path=ColorBlueComponent}"/>
+            <!-- Color preview. -->
+            <Border Background="{Binding Path=SelectedColor, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.RowSpan="7" Margin="5,0,0,0"/>
+            <Button Command="{Binding AddCommand}" CommandParameter="{Binding SelectedColor}" Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="8" HorizontalAlignment="Left" Width="75">Add</Button>
+        </Grid>
+
+        <ListBox ItemsSource="{Binding Colors}" Grid.Row="1" HorizontalContentAlignment="Stretch" Margin="0,5,0,0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" VerticalAlignment="Center"/>
+                        <Border Grid.Column="1"/>
+                        <Button Grid.Column="2" Margin="2" Width="75">Delete</Button>
+                        <TextBlock Grid.Column="0" Text="{Binding StringFormat=Colors}" VerticalAlignment="Center"/>
+                        <Border Background="{Binding StringFormat=Colors}" Grid.Column="1"/>
+                        <Button Command="{Binding Path=DataContext.DelCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" CommandParameter="{Binding StringFormat=Colors}" Grid.Column="2" Margin="2" Width="75">Delete</Button>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
+
+    
 </Window>
